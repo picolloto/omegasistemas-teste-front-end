@@ -46,5 +46,17 @@ function getCity(idState) {
 }
 
 function getData(idIbge) {
+    const url = `http://www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
+    const option = {
+        headers: {
+            'Accept': '*/*',
+            'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+        }
+    };
 
+    const reqData = requestApi(url, option);
+
+    reqData.then((response) => {
+        console.log(response);
+    });
 }
