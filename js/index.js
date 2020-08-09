@@ -2,9 +2,10 @@ $(document).ready(() => {
     getState();
     $('#buttonBack').click((event) => {
         event.preventDefault();
-        $('#section-form').fadeIn(500);
-        $('.cfg').fadeOut(500);
+        $('#section-form').hide(500);
+        $('.cfg').show(500);
     });
+
 });
 
 // Requests to all API's
@@ -51,8 +52,8 @@ function getCity(idState) {
             event.preventDefault();
             if (idCity !== '') {
                 var idCity = $('#city').val();
-                getData(res, 2900037); // function for fake data 'res'
-                //getData(idCity); Uncomment this function for API 
+                getData(res, 2900037); // function for static data 'res'
+                //getData(idCity); Uncomment this function for enable API 
             }
         });
     });
@@ -85,8 +86,8 @@ const res = [{
     "dataReferencia": "01/04/2020",
     "municipio": {
         "codigoIBGE": "5107958",
-        "nomeIBGE": "CIDADE FAKE",
-        "nomeIBGEsemAcento": "CIDADE FAKE",
+        "nomeIBGE": "COLÍDER",
+        "nomeIBGEsemAcento": "COLIDER",
         "pais": "BRASIL",
         "uf": {
             "sigla": "MT",
@@ -137,7 +138,7 @@ function getData(res, id) { // Comment this function for enable API request
     });
 }
 
-
+// This main function for API Auxilio Emergêncial
 // function getData(idCity) {
 //     console.log(now);
 //     const url =`http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
@@ -147,11 +148,10 @@ function getData(res, id) { // Comment this function for enable API request
 //             'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
 //         }
 //     };
-
 // const reqData = requestApi(url, option);
 
 // reqData.then((response) => {
-//  showData();
+//  showData(response, idCity);
 
 // });
 // }
