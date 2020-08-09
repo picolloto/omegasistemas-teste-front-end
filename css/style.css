@@ -39,7 +39,7 @@ section {
 
 div.cfg {
     max-width: 400px;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 footer {

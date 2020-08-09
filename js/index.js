@@ -1,7 +1,10 @@
 $(document).ready(() => {
-
-
     getState();
+    $('#buttonBack').click((event) => {
+        event.preventDefault();
+        $('#section-form').fadeIn(500);
+        $('.cfg').fadeOut(500);
+    });
 });
 
 // Requests to all API's
@@ -22,8 +25,6 @@ function getState() {
         response.forEach(state => {
             $('#state').append(`<option value="${state.id}">${state.sigla}</option>`);
         });
-
-
         $('#state').click(() => {
             $('#city').append(`<option value="" selected> Selecione um Município </option>`);
             const idState = $('#state').val();
@@ -50,13 +51,15 @@ function getCity(idState) {
             event.preventDefault();
             if (idCity !== '') {
                 var idCity = $('#city').val();
-                getData(res, 2900036); // function for fake data 'res'
+                getData(res, 2900037); // function for fake data 'res'
                 //getData(idCity); Uncomment this function for API 
             }
         });
     });
 }
 
+
+// Data
 const res = [{
     "id": 2900037,
     "dataReferencia": "01/04/2020",
@@ -105,7 +108,7 @@ function getData(res, id) { // Comment this function for enable API request
     $('.cfg').hide(500);
     res.forEach((city) => {
         if (city.id == id) {
-            $('#section-form').fadeIn(500, () =>
+            $('#section-form').show(500, () =>
                 $('#section-form').append(`
                 <div class="container cfg">
                     <div class="form-group">    
@@ -125,7 +128,7 @@ function getData(res, id) { // Comment this function for enable API request
                         <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="ButtonBack" class="btn btn-info">Voltar</button>
+                        <button type="submit" id="buttonBack" class="btn btn-info">Voltar</button>
                     </div>
                 </div>
                 `)
@@ -134,7 +137,8 @@ function getData(res, id) { // Comment this function for enable API request
     });
 }
 
-// function getData(res, id) {
+
+// function getData(idCity) {
 //     console.log(now);
 //     const url =`http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
 //     const option = {
@@ -147,7 +151,7 @@ function getData(res, id) { // Comment this function for enable API request
 // const reqData = requestApi(url, option);
 
 // reqData.then((response) => {
-//  
+//  showData();
 
 // });
 // }
