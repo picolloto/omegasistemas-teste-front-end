@@ -1,4 +1,29 @@
 * {
     margin: 0;
     padding: 0;
+    border: 0;
+}
+
+body,
+html {
+    background-color: whitesmoke;
+}
+
+section {
+    margin: 5%;
+}
+
+header,
+h1,
+h2 {
+    background-color: rgb(158, 3, 3);
+    padding: 10px 0px 10px 0px;
+    color: white;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    background-color: #cecece;
+    margin-bottom: 0px;
 }
