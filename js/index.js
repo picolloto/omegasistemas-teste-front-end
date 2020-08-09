@@ -11,18 +11,25 @@ async function requestApi(url, options) {
 function getState() {
     const urlState = `https://servicodados.ibge.gov.br/api/v1/localidades/estados`;
     const reqState = requestApi(urlState);
+    $('#city').attr("disabled", true);
 
     reqState.then((response) => {
+
         $('#state').append(`<option value="" selected> Selecione um Estado </option>`);
-        $('#city').append(`<option value="" selected> Selecione um Município </option>`);
 
         response.forEach(state => {
             $('#state').append(`<option value="${state.id}">${state.sigla}</option>`);
         });
 
+
         $('#state').click(() => {
+            $('#city').append(`<option value="" selected> Selecione um Município </option>`);
             const idState = $('#state').val();
-            if (idState != '') { getCity(idState); }
+            if (idState !== '') {
+                $('#city').attr("disabled", false);
+                getCity(idState);
+
+            }
         });
     });
 }
@@ -40,7 +47,7 @@ function getCity(idState) {
         $('#buttonSubmit').click((event) => {
             event.preventDefault();
             var idCity = $('#city').val();
-            if (idCity != '') { getData(idCity); }
+            if (idCity != '') { getData(response); }
         });
     });
 }
