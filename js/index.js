@@ -1,6 +1,36 @@
 $(document).ready(() => {
+    $('form').ready(() => {
+        var div = $("form");
+        div.animate({ center: '400px' }, "slow");
+    });
+
     getState();
 });
+
+
+
+const res = [{
+    "id": 2900037,
+    "dataReferencia": "01/04/2020",
+    "municipio": {
+        "codigoIBGE": "5107958",
+        "nomeIBGE": "TANGARÁ DA SERRA",
+        "nomeIBGEsemAcento": "TANGARA DA SERRA",
+        "pais": "BRASIL",
+        "uf": {
+            "sigla": "MT",
+            "nome": "MATO GROSSO"
+        }
+    },
+    "tipo": {
+        "id": 6,
+        "descricao": "Auxílio Emergencial",
+        "descricaoDetalhada": "Auxílio Emergencial"
+    },
+    "valor": 12579000,
+    "quantidadeBeneficiados": 17315
+}];
+
 
 // Requests to all API's
 async function requestApi(url, options) {
@@ -46,24 +76,53 @@ function getCity(idState) {
 
         $('#buttonSubmit').click((event) => {
             event.preventDefault();
-            var idCity = $('#city').val();
-            if (idCity != '') { getData(response); }
+            if (idCity !== '') {
+                var idCity = $('#city').val();
+                getData(res, 2900037);
+            }
         });
     });
 }
 
-function getData(idIbge) {
-    const url = `http://www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
-    const option = {
-        headers: {
-            'Accept': '*/*',
-            'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+
+function getData(res, id) {
+    $('.cfg').fadeOut(500);
+    res.forEach((city) => {
+        if (city.id == id) {
+            $('#section-form').append(`
+            <div class="container cfg">
+                <div class="form-group">
+                    <label id="beneficiados">Quantidade de Beneficiados: </label>
+                    <input class="form-control" id="beneficiados" value="${city.quantidadeBeneficiados}" disabled>
+                </div>
+                <div class="form-group">    
+                    <label id="valor">Valor Pago: </label>
+                    <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info">Voltar</button>
+                </div>
+            </div>
+            `);
         }
-    };
-
-    const reqData = requestApi(url, option);
-
-    reqData.then((response) => {
-        console.log(response);
     });
 }
+
+
+// function getData(res, id) {
+//     console.log(now);
+//     const url =`http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
+//     const option = {
+//         headers: {
+//             'Accept': '*/*',
+//             'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+//         }
+//     };
+
+// const reqData = requestApi(url, option);
+
+// reqData.then((response) => {
+
+
+// });
+// }
