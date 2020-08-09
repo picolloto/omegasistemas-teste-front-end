@@ -1,36 +1,8 @@
 $(document).ready(() => {
-    $('form').ready(() => {
-        var div = $("form");
-        div.animate({ center: '400px' }, "slow");
-    });
+
 
     getState();
 });
-
-
-
-const res = [{
-    "id": 2900037,
-    "dataReferencia": "01/04/2020",
-    "municipio": {
-        "codigoIBGE": "5107958",
-        "nomeIBGE": "TANGARÁ DA SERRA",
-        "nomeIBGEsemAcento": "TANGARA DA SERRA",
-        "pais": "BRASIL",
-        "uf": {
-            "sigla": "MT",
-            "nome": "MATO GROSSO"
-        }
-    },
-    "tipo": {
-        "id": 6,
-        "descricao": "Auxílio Emergencial",
-        "descricaoDetalhada": "Auxílio Emergencial"
-    },
-    "valor": 12579000,
-    "quantidadeBeneficiados": 17315
-}];
-
 
 // Requests to all API's
 async function requestApi(url, options) {
@@ -78,36 +50,89 @@ function getCity(idState) {
             event.preventDefault();
             if (idCity !== '') {
                 var idCity = $('#city').val();
-                getData(res, 2900037);
+                getData(res, 2900036); // function for fake data 'res'
+                //getData(idCity); Uncomment this function for API 
             }
         });
     });
 }
 
+const res = [{
+    "id": 2900037,
+    "dataReferencia": "01/04/2020",
+    "municipio": {
+        "codigoIBGE": "5107958",
+        "nomeIBGE": "TANGARÁ DA SERRA",
+        "nomeIBGEsemAcento": "TANGARA DA SERRA",
+        "pais": "BRASIL",
+        "uf": {
+            "sigla": "MT",
+            "nome": "MATO GROSSO"
+        }
+    },
+    "tipo": {
+        "id": 6,
+        "descricao": "Auxílio Emergencial",
+        "descricaoDetalhada": "Auxílio Emergencial"
+    },
+    "valor": 12579000,
+    "quantidadeBeneficiados": 17315
+}, {
+    "id": 2900036,
+    "dataReferencia": "01/04/2020",
+    "municipio": {
+        "codigoIBGE": "5107958",
+        "nomeIBGE": "CIDADE FAKE",
+        "nomeIBGEsemAcento": "CIDADE FAKE",
+        "pais": "BRASIL",
+        "uf": {
+            "sigla": "MT",
+            "nome": "MATO GROSSO"
+        }
+    },
+    "tipo": {
+        "id": 6,
+        "descricao": "Auxílio Emergencial",
+        "descricaoDetalhada": "Auxílio Emergencial"
+    },
+    "valor": 40579000,
+    "quantidadeBeneficiados": 12315
+}];
 
-function getData(res, id) {
-    $('.cfg').fadeOut(500);
+
+function getData(res, id) { // Comment this function for enable API request
+    // function showData(res, id) { Uncomment for enable API results
+    $('.cfg').hide(500);
     res.forEach((city) => {
         if (city.id == id) {
-            $('#section-form').append(`
-            <div class="container cfg">
-                <div class="form-group">
-                    <label id="beneficiados">Quantidade de Beneficiados: </label>
-                    <input class="form-control" id="beneficiados" value="${city.quantidadeBeneficiados}" disabled>
+            $('#section-form').fadeIn(500, () =>
+                $('#section-form').append(`
+                <div class="container cfg">
+                    <div class="form-group">    
+                        <label id="cityAfter">Município: </label>
+                        <input class="form-control" id="cityAfter" value="${city.municipio.nomeIBGE}" disabled>
+                    </div>
+                    <div class="form-group">    
+                    <label id="stateAfter">Estado: </label>
+                    <input class="form-control" id="stateAfter" value="${city.municipio.uf.sigla}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label id="beneficiados">Quantidade de Beneficiados: </label>
+                        <input class="form-control" id="beneficiados" value="${city.quantidadeBeneficiados}" disabled>
+                    </div>
+                    <div class="form-group">    
+                        <label id="valor">Valor Pago: </label>
+                        <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="ButtonBack" class="btn btn-info">Voltar</button>
+                    </div>
                 </div>
-                <div class="form-group">    
-                    <label id="valor">Valor Pago: </label>
-                    <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-info">Voltar</button>
-                </div>
-            </div>
-            `);
+                `)
+            );
         }
     });
 }
-
 
 // function getData(res, id) {
 //     console.log(now);
@@ -122,7 +147,7 @@ function getData(res, id) {
 // const reqData = requestApi(url, option);
 
 // reqData.then((response) => {
-
+//  
 
 // });
 // }
