@@ -15,30 +15,29 @@
         <h2>Teste Front-end</h2>
     </header>
     <main>
-        <section class="container">
+        <section>
             <form>
                 <h3>Consultar Auxilio Emergêncial por Município</h3>
-                <div class="form-group">
-                    <label for="state">UF: </label>
-                    <select id="state" class="form-control" required> </select>
-                </div>
-                <div class="form-group">
-                    <label for="city">Município: </label>
-                    <select id="city" class="form-control" required> </select>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-info" id="buttonSubmit">
-              Buscar
-            </button>
+                <div class="container cfg">
+                    <div class="form-group">
+                        <label for="state">Estado: </label>
+                        <select id="state" class="form-control" required> </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Município: </label>
+                        <select id="city" class="form-control" required> </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info container-fluid" id="buttonSubmit">
+                Buscar
+              </button>
+                    </div>
                 </div>
             </form>
         </section>
     </main>
     <footer class="fixed-bottom">
-        <p>
-            Este sistema realiza buscas nas API's do <b>IBGE</b> e
-            <b>Portal da transparência</b>.
-        </p>
+        <p>A consulta é realizada a partir de <b>04/2020</b>.</p>
     </footer>
 
     <script src="js/jquery.js" rel="text/javascript"></script>
