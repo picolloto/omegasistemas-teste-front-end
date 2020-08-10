@@ -21,9 +21,10 @@ function getState() {
             $('#state').append(`<option value="${state.id}">${state.sigla}</option>`);
         });
         $('#state').click(() => {
+            $('#city').empty();
             $('#city').append(`<option value="" selected> Selecione um Município </option>`);
             const idState = $('#state').val();
-            if (idState !== '') {
+            if (idState != '') {
                 $('#city').attr("disabled", false);
                 getCity(idState);
 
@@ -44,8 +45,8 @@ function getCity(idState) {
 
         $('#buttonSubmit').click((event) => {
             event.preventDefault();
-            if (idCity !== '') {
-                var idCity = $('#city').val();
+            const idCity = $('#city').val();
+            if (idCity != '') {
                 getData(res, 2900037); // function for static data 'res'
                 //getData(idCity); Uncomment this function for enable API 
             }
@@ -128,6 +129,7 @@ function getData(res, id) { // Comment this function for enable API request
                     </div>
                 </div>
                 `)
+
             );
         }
     });
