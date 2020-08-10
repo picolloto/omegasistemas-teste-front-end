@@ -1,11 +1,5 @@
 $(document).ready(() => {
     getState();
-    $('#buttonBack').click((event) => {
-        event.preventDefault();
-        $('#section-form').hide(500);
-        $('.cfg').show(500);
-    });
-
 });
 
 // Requests to all API's
@@ -61,6 +55,7 @@ function getCity(idState) {
 
 
 // Data
+// Comment this for enable API
 const res = [{
     "id": 2900037,
     "dataReferencia": "01/04/2020",
@@ -129,7 +124,7 @@ function getData(res, id) { // Comment this function for enable API request
                         <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
                     </div>
                     <div class="form-group">
-                        <button type="submit" id="buttonBack" class="btn btn-info">Voltar</button>
+                        <a type="submit" href="index.html" class="btn btn-info">Voltar</a>
                     </div>
                 </div>
                 `)

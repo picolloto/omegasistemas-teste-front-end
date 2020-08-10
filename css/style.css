@@ -20,7 +20,8 @@ h2 {
     font-weight: bold;
 }
 
-button {
+button,
+a {
     width: 100%;
 }
 
