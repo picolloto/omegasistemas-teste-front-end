@@ -4,6 +4,6 @@
 
 <p>Foi utilizado o FETCH para realizar as requisições.</p>
 
-<p>Bootstrap para estilo e Jquery para os eventos./p>
+<p>Bootstrap para estilo e Jquery para os eventos.</p>
 
 <p><b>Utilização:</b> Para utilizar basta abrir o arquivo <b><i>index.html.</i></b></p>
