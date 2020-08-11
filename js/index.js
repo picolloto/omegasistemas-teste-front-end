@@ -47,66 +47,35 @@ function getCity(idState) {
             event.preventDefault();
             const idCity = $('#city').val();
             if (idCity != '') {
-                getData(res, 2900037); // function for static data 'res'
-                //getData(idCity); Uncomment this function for enable API 
+                getData(idCity);
             }
         });
     });
 }
 
+// This main function for API Auxilio Emergêncial
+function getData(idCity) {
 
-// Data
-// Comment this for enable API
-const res = [{
-    "id": 2900037,
-    "dataReferencia": "01/04/2020",
-    "municipio": {
-        "codigoIBGE": "5107958",
-        "nomeIBGE": "TANGARÁ DA SERRA",
-        "nomeIBGEsemAcento": "TANGARA DA SERRA",
-        "pais": "BRASIL",
-        "uf": {
-            "sigla": "MT",
-            "nome": "MATO GROSSO"
+    const url = `http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
+    const option = {
+        headers: {
+            'Accept': '*/*',
+            'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
         }
-    },
-    "tipo": {
-        "id": 6,
-        "descricao": "Auxílio Emergencial",
-        "descricaoDetalhada": "Auxílio Emergencial"
-    },
-    "valor": 12579000,
-    "quantidadeBeneficiados": 17315
-}, {
-    "id": 2900036,
-    "dataReferencia": "01/04/2020",
-    "municipio": {
-        "codigoIBGE": "5107958",
-        "nomeIBGE": "COLÍDER",
-        "nomeIBGEsemAcento": "COLIDER",
-        "pais": "BRASIL",
-        "uf": {
-            "sigla": "MT",
-            "nome": "MATO GROSSO"
-        }
-    },
-    "tipo": {
-        "id": 6,
-        "descricao": "Auxílio Emergencial",
-        "descricaoDetalhada": "Auxílio Emergencial"
-    },
-    "valor": 40579000,
-    "quantidadeBeneficiados": 12315
-}];
+    };
+    const reqData = requestApi(url, option);
 
+    reqData.then((response) => {
+        showData(response, idCity);
+    });
+}
 
-function getData(res, id) { // Comment this function for enable API request
-    // function showData(res, id) { Uncomment for enable API results
+function showData(res, id) { //Uncomment for enable API results
     $('.cfg').hide(500);
+    console.log(res, id);
     res.forEach((city) => {
-        if (city.id == id) {
-            $('#section-form').show(500, () =>
-                $('#section-form').append(`
+        $('#section-form').show(500, () =>
+            $('#section-form').append(`
                 <div class="container cfg">
                     <div class="form-group">    
                         <label id="cityAfter">Município: </label>
@@ -122,33 +91,13 @@ function getData(res, id) { // Comment this function for enable API request
                     </div>
                     <div class="form-group">    
                         <label id="valor">Valor Pago: </label>
-                        <input class="form-control" id="valor" value="R$ ${city.valor}" disabled>
+                        <input class="form-control" id="valor" value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(city.valor)}" disabled>
                     </div>
                     <div class="form-group">
                         <a type="submit" href="index.html" class="btn btn-info">Voltar</a>
                     </div>
                 </div>
                 `)
-
-            );
-        }
+        );
     });
 }
-
-// This main function for API Auxilio Emergêncial
-// function getData(idCity) {
-//     console.log(now);
-//     const url =`http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
-//     const option = {
-//         headers: {
-//             'Accept': '*/*',
-//             'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
-//         }
-//     };
-// const reqData = requestApi(url, option);
-
-// reqData.then((response) => {
-//  showData(response, idCity);
-
-// });
-// }
