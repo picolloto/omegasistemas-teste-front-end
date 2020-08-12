@@ -47,57 +47,89 @@ function getCity(idState) {
             event.preventDefault();
             const idCity = $('#city').val();
             if (idCity != '') {
-                getData(idCity);
+                getData(idCity, dataArray);
             }
         });
     });
 }
 
-// This main function for API Auxilio Emergêncial
-function getData(idCity) {
-
-    const url = `http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=202004&codigoIbge=${idCity}&pagina=1`;
-    const option = {
-        headers: {
-            'Accept': '*/*',
-            'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+var dataArray = [{
+    "municipio": {
+        "nomeIBGE": '',
+        "uf": {
+            "nome": ''
         }
-    };
-    const reqData = requestApi(url, option);
+    },
+    "valor": 0,
+    "quantidadeBeneficiados": 0
+}];
 
-    reqData.then((response) => {
-        showData(response, idCity);
-    });
+// This main function for API Auxilio Emergêncial
+async function getData(idCity, dataArray) {
+
+    var date = new Date();
+    var mesAnoEnd = `${date.getFullYear()}`;
+
+    if (date.getMonth() >= 10) {
+        mesAnoEnd += `${date.getMonth()}`;
+    } else {
+        mesAnoEnd += `0${date.getMonth()}`;
+        mesAnoEnd = Number(mesAnoEnd);
+    }
+
+
+    for (var mesAno = 202004; mesAno <= mesAnoEnd; mesAno++) {
+        const url = `http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${mesAno}&codigoIbge=${idCity}&pagina=1`;
+        const option = {
+            headers: {
+                'Accept': '*/*',
+                'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+            }
+        };
+
+        const reqData = requestApi(url, option);
+
+        await reqData.then((response) => {
+                return response;
+            })
+            .then((test) => {
+                test.forEach((data) => {
+                    dataArray[0].municipio.nomeIBGE = data.municipio.nomeIBGE;
+                    dataArray[0].municipio.uf.nome = data.municipio.uf.nome;
+                    dataArray[0].valor += data.valor;
+                    dataArray[0].quantidadeBeneficiados += data.quantidadeBeneficiados;
+                });
+            });
+
+        if (mesAno >= mesAnoEnd) { showData(); }
+    }
 }
 
-function showData(res, id) { //Uncomment for enable API results
+function showData() { //Uncomment for enable API results
     $('.cfg').hide(500);
-    console.log(res, id);
-    res.forEach((city) => {
-        $('#section-form').show(500, () =>
-            $('#section-form').append(`
+    $('#section-form').show(500, () =>
+        $('#section-form').append(`
                 <div class="container cfg">
                     <div class="form-group">    
                         <label id="cityAfter">Município: </label>
-                        <input class="form-control" id="cityAfter" value="${city.municipio.nomeIBGE}" disabled>
+                        <input class="form-control" id="cityAfter" value="${dataArray[0].municipio.nomeIBGE}" disabled>
                     </div>
                     <div class="form-group">    
                     <label id="stateAfter">Estado: </label>
-                    <input class="form-control" id="stateAfter" value="${city.municipio.uf.sigla}" disabled>
+                    <input class="form-control" id="stateAfter" value="${dataArray[0].municipio.uf.nome}" disabled>
                     </div>
                     <div class="form-group">
                         <label id="beneficiados">Quantidade de Beneficiados: </label>
-                        <input class="form-control" id="beneficiados" value="${city.quantidadeBeneficiados}" disabled>
+                        <input class="form-control" id="beneficiados" value="${dataArray[0].quantidadeBeneficiados}" disabled>
                     </div>
                     <div class="form-group">    
                         <label id="valor">Valor Pago: </label>
-                        <input class="form-control" id="valor" value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(city.valor)}" disabled>
+                        <input class="form-control" id="valor" value="${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(dataArray[0].valor)}" disabled>
                     </div>
                     <div class="form-group">
                         <a type="submit" href="index.html" class="btn btn-info">Voltar</a>
                     </div>
                 </div>
                 `)
-        );
-    });
+    );
 }
