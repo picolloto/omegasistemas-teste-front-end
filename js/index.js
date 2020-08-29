@@ -77,9 +77,9 @@ async function getData(idCity, dataArray) {
         mesAnoEnd = Number(mesAnoEnd);
     }
 
-
     for (var mesAno = 202004; mesAno <= mesAnoEnd; mesAno++) {
-        const url = `http:www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${mesAno}&codigoIbge=${idCity}&pagina=1`;
+
+        const url = `http://www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${mesAno}&codigoIbge=${idCity}&pagina=1`;
         const option = {
             headers: {
                 'Accept': '*/*',
@@ -92,8 +92,8 @@ async function getData(idCity, dataArray) {
         await reqData.then((response) => {
                 return response;
             })
-            .then((test) => {
-                test.forEach((data) => {
+            .then((res) => {
+                res.forEach((data) => {
                     dataArray[0].municipio.nomeIBGE = data.municipio.nomeIBGE;
                     dataArray[0].municipio.uf.nome = data.municipio.uf.nome;
                     dataArray[0].valor += data.valor;
