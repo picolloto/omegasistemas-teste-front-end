@@ -79,11 +79,11 @@ async function getData(idCity, dataArray) {
 
     for (var mesAno = 202004; mesAno <= mesAnoEnd; mesAno++) {
 
-        const url = `http://www.transparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${mesAno}&codigoIbge=${idCity}&pagina=1`;
+        const url = `http://api.portaldatransparencia.gov.br/api-de-dados/auxilio-emergencial-por-municipio?mesAno=${mesAno}&codigoIbge=${idCity}&pagina=1`;
         const option = {
             headers: {
                 'Accept': '*/*',
-                'chave-api-dados': '5a0d8cbc9b8729f9d0a72451550f604e'
+                'chave-api-dados': '{INSIRA SUA CHAVE DA API DO PORTAL DA TRANSPARÊNCIA}'
             }
         };
 
