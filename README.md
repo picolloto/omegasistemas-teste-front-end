@@ -6,4 +6,7 @@
 
 <p>Bootstrap para estilo e Jquery para os eventos.</p>
 
-<p><b>Utilização:</b> Para utilizar basta abrir o arquivo <b><i>index.html.</i></b></p>
+<h5><b>Utilização:</b></h5>
+  
+<p>Gerar uma chave na api do portal da transparência e alterar em `chave-api-dados`: http://api.portaldatransparencia.gov.br </p>  
+<p><b> Para utilizar basta abrir o arquivo <b><i>index.html.</i></b></p>
